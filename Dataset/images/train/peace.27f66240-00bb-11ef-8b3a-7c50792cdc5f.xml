@@ -1,0 +1,26 @@
+<annotation>
+	<folder>peace</folder>
+	<filename>peace.27f66240-00bb-11ef-8b3a-7c50792cdc5f.jpg</filename>
+	<path>C:\Users\User\CleanProject\pythonProject1\Dataset\images\collectedimages\peace\peace.27f66240-00bb-11ef-8b3a-7c50792cdc5f.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>peace</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>236</xmin>
+			<ymin>163</ymin>
+			<xmax>348</xmax>
+			<ymax>386</ymax>
+		</bndbox>
+	</object>
+</annotation>

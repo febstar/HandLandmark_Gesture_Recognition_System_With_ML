@@ -1,0 +1,26 @@
+<annotation>
+	<folder>number1</folder>
+	<filename>number1.89bbadf4-00bc-11ef-99a9-7c50792cdc5f.jpg</filename>
+	<path>C:\Users\User\CleanProject\pythonProject1\Dataset\images\collectedimages\number1\number1.89bbadf4-00bc-11ef-99a9-7c50792cdc5f.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>number1</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>182</xmin>
+			<ymin>242</ymin>
+			<xmax>292</xmax>
+			<ymax>456</ymax>
+		</bndbox>
+	</object>
+</annotation>
