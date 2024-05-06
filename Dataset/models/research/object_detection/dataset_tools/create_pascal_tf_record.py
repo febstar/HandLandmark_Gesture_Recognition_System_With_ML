@@ -36,6 +36,7 @@ import tensorflow.compat.v1 as tf
 
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
+import lxml.etree
 
 
 flags = tf.app.flags
@@ -171,7 +172,7 @@ def main(_):
       path = os.path.join(annotations_dir, example + '.xml')
       with tf.gfile.GFile(path, 'r') as fid:
         xml_str = fid.read()
-      xml = etree.fromstring(xml_str)
+      xml = etree.fromstring(xml_str, parser=lxml.etree.XMLParser(resolve_entities=False))
       data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
 
       tf_example = dict_to_tf_example(data, FLAGS.data_dir, label_map_dict,

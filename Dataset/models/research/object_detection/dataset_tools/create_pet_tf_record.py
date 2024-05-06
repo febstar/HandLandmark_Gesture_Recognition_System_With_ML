@@ -42,6 +42,7 @@ import tensorflow.compat.v1 as tf
 from object_detection.dataset_tools import tf_record_creation_util
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
+import lxml.etree
 
 flags = tf.app.flags
 flags.DEFINE_string('data_dir', '', 'Root directory to raw pet dataset.')
@@ -247,7 +248,7 @@ def create_tf_record(output_filename,
         continue
       with tf.gfile.GFile(xml_path, 'r') as fid:
         xml_str = fid.read()
-      xml = etree.fromstring(xml_str)
+      xml = etree.fromstring(xml_str, parser=lxml.etree.XMLParser(resolve_entities=False))
       data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
 
       try:
