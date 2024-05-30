@@ -328,7 +328,7 @@ class Config(params_dict.ParamsDict):
   def from_yaml(cls, file_path: str):
     # Note: This only works if the Config has all default values.
     with tf.io.gfile.GFile(file_path, 'r') as f:
-      loaded = yaml.load(f, Loader=yaml.FullLoader)
+      loaded = yaml.load(f, Loader=yaml.SafeLoader)
       config = cls()
       config.override(loaded)
       return config

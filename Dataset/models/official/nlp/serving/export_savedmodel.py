@@ -122,7 +122,7 @@ def create_export_module(*, task_name: Text, config_file: Text,
 def main(_):
   serving_params = yaml.load(
       hyperparams.nested_csv_str_to_json_str(FLAGS.serving_params),
-      Loader=yaml.FullLoader)
+      Loader=yaml.SafeLoader)
   export_module = create_export_module(
       task_name=FLAGS.task_name,
       config_file=FLAGS.config_file,
