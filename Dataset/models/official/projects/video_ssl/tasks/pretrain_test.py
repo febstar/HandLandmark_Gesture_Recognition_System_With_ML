@@ -15,7 +15,6 @@
 
 import functools
 import os
-import random
 
 import orbit
 import tensorflow as tf, tf_keras
@@ -27,6 +26,8 @@ from official.core import task_factory
 from official.modeling import optimization
 from official.projects.video_ssl.tasks import pretrain
 from official.vision.dataloaders import tfexample_utils
+import secrets
+
 # pylint: enable=unused-import
 
 
@@ -42,7 +43,7 @@ class VideoClassificationTaskTest(tf.test.TestCase):
         tfexample_utils.make_video_test_example(
             image_shape=(36, 36, 3),
             audio_shape=(20, 128),
-            label=random.randint(0, 100)) for _ in range(2)
+            label=secrets.SystemRandom().randint(0, 100)) for _ in range(2)
     ]
     # pylint: enable=g-complex-comprehension
     tfexample_utils.dump_to_tfrecord(self._data_path, tf_examples=examples)

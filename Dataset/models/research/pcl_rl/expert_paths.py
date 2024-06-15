@@ -19,11 +19,11 @@ For producing or loading expert trajectories in environment.
 """
 
 import tensorflow as tf
-import random
 import os
 import numpy as np
 from six.moves import xrange
 import pickle
+import secrets
 
 gfile = tf.gfile
 
@@ -37,7 +37,7 @@ def sample_expert_paths(num, env_str, env_spec,
 
     with gfile.GFile(load_trajectories_file, 'r') as f:
       episodes = pickle.load(f)
-      episodes = random.sample(episodes, num)
+      episodes = secrets.SystemRandom().sample(episodes, num)
       return [ep[1:] for ep in episodes]
 
   return [sample_expert_path(env_str, env_spec)
@@ -46,14 +46,14 @@ def sample_expert_paths(num, env_str, env_spec,
 
 def sample_expert_path(env_str, env_spec):
   """Algorithmic tasks have known distribution of expert paths we sample from."""
-  t = random.randint(2, 10)  # sequence length
+  t = secrets.SystemRandom().randint(2, 10)  # sequence length
   observations = []
   actions = [env_spec.initial_act(None)]
   rewards = []
 
   if env_str in ['DuplicatedInput-v0', 'Copy-v0']:
     chars = 5
-    random_ints = [int(random.random() * 1000) for _ in xrange(t)]
+    random_ints = [int(secrets.SystemRandom().random() * 1000) for _ in xrange(t)]
     for tt in xrange(t):
       char_idx = tt // 2 if env_str == 'DuplicatedInput-v0' else tt
       char = random_ints[char_idx] % chars
@@ -63,7 +63,7 @@ def sample_expert_path(env_str, env_spec):
   elif env_str in ['RepeatCopy-v0']:
     chars = 5
 
-    random_ints = [int(random.random() * 1000) for _ in xrange(t)]
+    random_ints = [int(secrets.SystemRandom().random() * 1000) for _ in xrange(t)]
     for tt in xrange(3 * t + 2):
       char_idx = (tt if tt < t else
                   2 * t - tt if tt <= 2 * t else
@@ -78,7 +78,7 @@ def sample_expert_path(env_str, env_spec):
       rewards.append(actions[-1][-2])
   elif env_str in ['Reverse-v0']:
     chars = 2
-    random_ints = [int(random.random() * 1000) for _ in xrange(t)]
+    random_ints = [int(secrets.SystemRandom().random() * 1000) for _ in xrange(t)]
     for tt in xrange(2 * t + 1):
       char_idx = tt if tt < t else 2 * t - tt
       if tt != t:
@@ -90,7 +90,7 @@ def sample_expert_path(env_str, env_spec):
       rewards.append(tt > t)
   elif env_str in ['ReversedAddition-v0']:
     chars = 3
-    random_ints = [int(random.random() * 1000) for _ in xrange(1 + 2 * t)]
+    random_ints = [int(secrets.SystemRandom().random() * 1000) for _ in xrange(1 + 2 * t)]
     carry = 0
     char_history = []
     move_map = {0: 3, 1: 1, 2: 2, 3: 1}
@@ -115,7 +115,7 @@ def sample_expert_path(env_str, env_spec):
       rewards.append(tt % 2 or tt == 2 * t)
   elif env_str in ['ReversedAddition3-v0']:
     chars = 3
-    random_ints = [int(random.random() * 1000) for _ in xrange(1 + 3 * t)]
+    random_ints = [int(secrets.SystemRandom().random() * 1000) for _ in xrange(1 + 3 * t)]
     carry = 0
     char_history = []
     move_map = {0: 3, 1: 3, 2: 1, 3: 2, 4:2, 5: 1}

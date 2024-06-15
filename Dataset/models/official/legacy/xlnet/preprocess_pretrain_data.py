@@ -17,7 +17,6 @@
 
 import json
 import os
-import random
 
 # Import libraries
 from absl import app
@@ -29,6 +28,7 @@ import numpy as np
 import tensorflow.compat.v1 as tf
 import sentencepiece as spm
 from official.legacy.xlnet import preprocess_utils
+import secrets
 
 FLAGS = flags.FLAGS
 
@@ -288,16 +288,16 @@ def _split_a_and_b(data, sent_ids, begin_idx, tot_len, extend_target=False):
     end_idx += 1
 
   a_begin = begin_idx
-  if len(cut_points) == 0 or random.random() < 0.5:  # pylint:disable=g-explicit-length-test
+  if len(cut_points) == 0 or secrets.SystemRandom().random() < 0.5:  # pylint:disable=g-explicit-length-test
     label = 0
     if len(cut_points) == 0:  # pylint:disable=g-explicit-length-test
       a_end = end_idx
     else:
-      a_end = random.choice(cut_points)
+      a_end = secrets.choice(cut_points)
 
     b_len = max(1, tot_len - (a_end - a_begin))
     # (zihangd): `data_len - 1` to account for extend_target
-    b_begin = random.randint(0, data_len - 1 - b_len)
+    b_begin = secrets.SystemRandom().randint(0, data_len - 1 - b_len)
     b_end = b_begin + b_len
     while b_begin > 0 and sent_ids[b_begin - 1] == sent_ids[b_begin]:
       b_begin -= 1
@@ -308,7 +308,7 @@ def _split_a_and_b(data, sent_ids, begin_idx, tot_len, extend_target=False):
     new_begin = a_end
   else:
     label = 1
-    a_end = random.choice(cut_points)
+    a_end = secrets.choice(cut_points)
     b_begin = a_end
     b_end = end_idx
 

@@ -20,10 +20,10 @@ from __future__ import division
 from __future__ import print_function
 
 import collections
-import random
 import numpy as np
 
 from base import embeddings
+import secrets
 
 
 def get_bucket(config, l):
@@ -100,7 +100,7 @@ class Dataset(object):
           cumulative_weight += curr_weight
           id_batches.append(np.array(curr_batch))
           curr_batch, curr_weight = [], 0.0
-    random.shuffle(id_batches)
+    secrets.SystemRandom().shuffle(id_batches)
 
     for id_batch in id_batches:
       yield self._make_minibatch(id_batch)

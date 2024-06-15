@@ -18,7 +18,6 @@ from __future__ import division
 from __future__ import print_function
 
 import math
-import random
 # pylint: disable=g-bad-import-order
 import numpy as np
 from six.moves import xrange  # pylint: disable=redefined-builtin
@@ -28,6 +27,7 @@ from absl import logging
 # pylint: enable=g-bad-import-order
 
 import data.featurizer as featurizer  # pylint: disable=g-bad-import-order
+import secrets
 
 
 class AudioConfig(object):
@@ -189,7 +189,7 @@ def batch_wise_dataset_shuffle(entries, epoch_index, sortagrad, batch_size):
     # Shuffle entries batch-wise.
     max_buckets = int(math.floor(len(entries) / batch_size))
     total_buckets = [i for i in xrange(max_buckets)]
-    random.shuffle(total_buckets)
+    secrets.SystemRandom().shuffle(total_buckets)
     shuffled_entries = []
     for i in total_buckets:
       shuffled_entries.extend(entries[i * batch_size : (i + 1) * batch_size])

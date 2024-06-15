@@ -29,7 +29,6 @@ from __future__ import print_function
 
 import math
 import os
-import random
 import sys
 
 from six.moves import range
@@ -37,6 +36,7 @@ from six.moves import zip
 import tensorflow.compat.v1 as tf
 
 from datasets import dataset_utils
+import secrets
 
 # The URL where the Flowers data can be downloaded.
 _DATA_URL = 'http://download.tensorflow.org/example_images/flower_photos.tgz'
@@ -195,8 +195,8 @@ def run(dataset_dir):
       list(zip(class_names, list(range(len(class_names))))))
 
   # Divide into train and test:
-  random.seed(_RANDOM_SEED)
-  random.shuffle(photo_filenames)
+  secrets.SystemRandom().seed(_RANDOM_SEED)
+  secrets.SystemRandom().shuffle(photo_filenames)
   training_filenames = photo_filenames[_NUM_VALIDATION:]
   validation_filenames = photo_filenames[:_NUM_VALIDATION]
 

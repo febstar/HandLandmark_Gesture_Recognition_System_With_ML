@@ -59,7 +59,6 @@ import csv
 import glob
 import hashlib
 import os
-import random
 import sys
 import zipfile
 
@@ -74,6 +73,7 @@ import tensorflow.compat.v1 as tf
 from object_detection.dataset_tools import seq_example_util
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
+import secrets
 
 
 POSSIBLE_TIMESTAMPS = range(902, 1798)
@@ -156,8 +156,8 @@ class Ava(object):
           video_path_format_string))
       logging.info('An example of the metadata: ')
       logging.info(all_metadata[0])
-      random.seed(47)
-      random.shuffle(all_metadata)
+      secrets.SystemRandom().seed(47)
+      secrets.SystemRandom().shuffle(all_metadata)
       shards = SPLITS[key]['shards']
       shard_names = [os.path.join(
           self.path_to_output_dir, FILEPATTERN % key + '-%05d-of-%05d' % (

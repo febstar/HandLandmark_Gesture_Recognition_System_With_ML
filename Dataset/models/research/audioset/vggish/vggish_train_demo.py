@@ -45,8 +45,6 @@ Usage:
 
 from __future__ import print_function
 
-from random import shuffle
-
 import numpy as np
 import tensorflow.compat.v1 as tf
 import tf_slim as slim
@@ -54,6 +52,7 @@ import tf_slim as slim
 import vggish_input
 import vggish_params
 import vggish_slim
+import secrets
 
 flags = tf.app.flags
 
@@ -117,7 +116,7 @@ def _get_examples_batch():
   all_examples = np.concatenate((sine_examples, const_examples, noise_examples))
   all_labels = np.concatenate((sine_labels, const_labels, noise_labels))
   labeled_examples = list(zip(all_examples, all_labels))
-  shuffle(labeled_examples)
+  secrets.SystemRandom().shuffle(labeled_examples)
 
   # Separate and return the features and labels.
   features = [example for (example, _) in labeled_examples]

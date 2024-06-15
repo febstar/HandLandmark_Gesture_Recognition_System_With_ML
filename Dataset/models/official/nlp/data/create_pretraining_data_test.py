@@ -13,11 +13,11 @@
 # limitations under the License.
 
 """Tests for official.nlp.data.create_pretraining_data."""
-import random
 
 import tensorflow as tf, tf_keras
 
 from official.nlp.data import create_pretraining_data as cpd
+import secrets
 
 _VOCAB_WORDS = ["vocab_1", "vocab_2"]
 
@@ -70,7 +70,7 @@ class CreatePretrainingDataTest(tf.test.TestCase):
 
   def test_create_masked_lm_predictions(self):
     tokens = ["[CLS]", "a", "##a", "b", "##b", "c", "##c", "[SEP]"]
-    rng = random.Random(123)
+    rng = secrets.SystemRandom().Random(123)
     for _ in range(0, 5):
       output_tokens, masked_positions, masked_labels = (
           cpd.create_masked_lm_predictions(
@@ -87,7 +87,7 @@ class CreatePretrainingDataTest(tf.test.TestCase):
 
   def test_create_masked_lm_predictions_whole_word(self):
     tokens = ["[CLS]", "a", "##a", "b", "##b", "c", "##c", "[SEP]"]
-    rng = random.Random(345)
+    rng = secrets.SystemRandom().Random(345)
     for _ in range(0, 5):
       output_tokens, masked_positions, masked_labels = (
           cpd.create_masked_lm_predictions(
@@ -108,7 +108,7 @@ class CreatePretrainingDataTest(tf.test.TestCase):
 
   def test_create_masked_lm_predictions_ngram(self):
     tokens = ["[CLS]"] + ["tok{}".format(i) for i in range(0, 512)] + ["[SEP]"]
-    rng = random.Random(345)
+    rng = secrets.SystemRandom().Random(345)
     for _ in range(0, 5):
       output_tokens, masked_positions, masked_labels = (
           cpd.create_masked_lm_predictions(

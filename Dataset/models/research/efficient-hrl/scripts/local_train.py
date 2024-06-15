@@ -20,9 +20,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 import os
-import random
 from subprocess import call
 import sys
+import secrets
 
 CONFIGS_PATH = './configs'
 CONTEXT_CONFIGS_PATH = './context/configs'
@@ -48,7 +48,7 @@ def main():
   ucp = CONFIGS_PATH
   ccp = CONTEXT_CONFIGS_PATH
   extra = ''
-  port = random.randint(2000, 8000)
+  port = secrets.SystemRandom().randint(2000, 8000)
   command_str = ("{binary} "
                  "--train_dir={h}/tmp/{context_setting}/{context}/{agent}/{exp}/train "
                  "--config_file={ucp}/{agent}.gin "

@@ -20,10 +20,10 @@ Allows for using batches of possibly identitically seeded environments.
 
 import gym
 import numpy as np
-import random
 
 from six.moves import xrange
 import env_spec
+import secrets
 
 
 def get_env(env_str):
@@ -36,7 +36,7 @@ class GymWrapper(object):
     self.distinct = distinct
     self.count = count
     self.total = self.distinct * self.count
-    self.seeds = seeds or [random.randint(0, 1e12)
+    self.seeds = seeds or [secrets.SystemRandom().randint(0, 1e12)
                            for _ in xrange(self.distinct)]
 
     self.envs = []
@@ -63,7 +63,7 @@ class GymWrapper(object):
     self.num_episodes_played += len(self.envs)
 
     # reset seeds to be synchronized
-    self.seeds = [random.randint(0, 1e12) for _ in xrange(self.distinct)]
+    self.seeds = [secrets.SystemRandom().randint(0, 1e12) for _ in xrange(self.distinct)]
     counter = 0
     for seed in self.seeds:
       for _ in xrange(self.count):
@@ -110,7 +110,7 @@ class GymWrapper(object):
     return [obs, reward, done, tt]
 
   def get_one(self):
-    return random.choice(self.envs)
+    return secrets.choice(self.envs)
 
   def __len__(self):
     return len(self.envs)

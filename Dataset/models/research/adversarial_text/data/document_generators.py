@@ -20,13 +20,13 @@ from __future__ import print_function
 from collections import namedtuple
 import csv
 import os
-import random
 
 # Dependency imports
 
 import tensorflow as tf
 
 from data import data_utils
+import secrets
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
@@ -93,7 +93,7 @@ def documents(dataset='train',
 
   # Set the random seed so that we have the same validation set when running
   # gen_data and gen_vocab.
-  random.seed(302)
+  secrets.SystemRandom().seed(302)
 
   ds = FLAGS.dataset
   if ds == 'imdb':
@@ -250,7 +250,7 @@ def dbpedia_documents(dataset='train',
     reader = csv.reader(db_f)
     for row in reader:
       # 10% of the data is randomly held out
-      is_validation = random.randint(1, 10) == 1
+      is_validation = secrets.SystemRandom().randint(1, 10) == 1
       if is_validation and not include_validation:
         continue
 
@@ -301,7 +301,7 @@ def rcv1_documents(dataset='train',
       reader = csv.reader(db_f)
       for row in reader:
         # 10% of the data is randomly held out
-        is_validation = random.randint(1, 10) == 1
+        is_validation = secrets.SystemRandom().randint(1, 10) == 1
         if is_validation and not include_validation:
           continue
 
@@ -368,7 +368,7 @@ def rt_documents(dataset='train',
         else:
           # 10% of the data is randomly held out for the validation set and
           # another 10% of it is randomly held out for the test set
-          random_int = random.randint(1, 10)
+          random_int = secrets.SystemRandom().randint(1, 10)
           is_validation = random_int == 1
           is_test = random_int == 2
           if (is_test and dataset != 'test') or (is_validation and

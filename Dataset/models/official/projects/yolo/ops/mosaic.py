@@ -13,7 +13,6 @@
 # limitations under the License.
 
 """Mosaic op."""
-import random
 
 import tensorflow as tf, tf_keras
 
@@ -21,6 +20,7 @@ from official.projects.yolo.ops import preprocessing_ops
 from official.vision.ops import augment
 from official.vision.ops import box_ops
 from official.vision.ops import preprocess_ops
+import secrets
 
 
 class Mosaic:
@@ -113,7 +113,7 @@ class Mosaic:
     self._pad_value = pad_value
 
     self._deterministic = seed is not None
-    self._seed = seed if seed is not None else random.randint(0, 2**30)
+    self._seed = seed if seed is not None else secrets.SystemRandom().randint(0, 2**30)
 
   def _generate_cut(self, num_tiles, mosaic_center):
     """Generate a random center to use for slicing and patching the images."""

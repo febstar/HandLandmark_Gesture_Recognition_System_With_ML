@@ -21,11 +21,11 @@ from __future__ import division
 from __future__ import print_function
 import math
 import os
-import random
 import sys
 import build_data
 from six.moves import range
 import tensorflow as tf
+import secrets
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -68,7 +68,7 @@ def _convert_dataset(dataset_split, dataset_dir, dataset_label_dir):
   """
 
   img_names = tf.gfile.Glob(os.path.join(dataset_dir, '*.jpg'))
-  random.shuffle(img_names)
+  secrets.SystemRandom().shuffle(img_names)
   seg_names = []
   for f in img_names:
     # get the filename without the extension

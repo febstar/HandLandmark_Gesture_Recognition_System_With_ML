@@ -14,7 +14,6 @@
 
 """A common dataset reader."""
 import dataclasses
-import random
 from typing import Any, Callable, Dict, List, Optional, Sequence, Text, Union
 
 from absl import logging
@@ -22,10 +21,11 @@ import tensorflow as tf, tf_keras
 import tensorflow_datasets as tfds
 
 from official.core import config_definitions as cfg
+import secrets
 
 
 def _get_random_integer():
-  return random.randint(0, (1 << 31) - 1)
+  return secrets.SystemRandom().randint(0, (1 << 31) - 1)
 
 
 def _maybe_map_fn(dataset: tf.data.Dataset,

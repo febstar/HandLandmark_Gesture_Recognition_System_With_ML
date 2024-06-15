@@ -17,10 +17,9 @@
 
 Implements replay buffer in Python.
 """
-
-import random
 import numpy as np
 from six.moves import xrange
+import secrets
 
 
 class ReplayBuffer(object):
@@ -57,13 +56,13 @@ class ReplayBuffer(object):
   def remove_n(self, n):
     """Get n items for removal."""
     # random removal
-    idxs = random.sample(xrange(self.init_length, self.cur_size), n)
+    idxs = secrets.SystemRandom().sample(xrange(self.init_length, self.cur_size), n)
     return idxs
 
   def get_batch(self, n):
     """Get batch of episodes to train on."""
     # random batch
-    idxs = random.sample(xrange(self.cur_size), n)
+    idxs = secrets.SystemRandom().sample(xrange(self.cur_size), n)
     return [self.buffer[idx] for idx in idxs], None
 
   def update_last_batch(self, delta):
@@ -123,7 +122,7 @@ class PrioritizedReplayBuffer(ReplayBuffer):
 
     if self.eviction_strategy == 'rand':
       # random removal
-      idxs = random.sample(xrange(self.init_length, self.cur_size), n)
+      idxs = secrets.SystemRandom().sample(xrange(self.init_length, self.cur_size), n)
     elif self.eviction_strategy == 'fifo':
       # overwrite elements in cyclical fashion
       idxs = [

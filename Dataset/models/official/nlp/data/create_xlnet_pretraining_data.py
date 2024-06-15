@@ -18,8 +18,6 @@ import dataclasses
 import json
 import math
 import os
-
-import random
 from typing import Iterable, Mapping, List, Optional, Tuple
 import unicodedata
 
@@ -33,6 +31,7 @@ import numpy as np
 import tensorflow as tf, tf_keras
 
 from official.nlp.tools import tokenization
+import secrets
 
 special_symbols = {
     "<unk>": 0,
@@ -301,15 +300,15 @@ def _create_a_and_b_segments(
 
   a_begin = begin_index
 
-  if not cut_indices or random.random() < no_cut_probability:
+  if not cut_indices or secrets.SystemRandom().random() < no_cut_probability:
     # Segments A and B are contained within the same sentence.
     label = 0
     if not cut_indices:
       a_end = end_index
     else:
-      a_end = random.choice(cut_indices)
+      a_end = secrets.choice(cut_indices)
     b_length = max(1, total_length - (a_end - a_begin))
-    b_begin = random.randint(0, data_length - 1 - b_length)
+    b_begin = secrets.SystemRandom().randint(0, data_length - 1 - b_length)
     b_end = b_begin + b_length
 
     while b_begin > 0 and sentence_ids[b_begin - 1] == sentence_ids[b_begin]:
@@ -320,7 +319,7 @@ def _create_a_and_b_segments(
   else:
     # Segments A and B are different sentences.
     label = 1
-    a_end = random.choice(cut_indices)
+    a_end = secrets.choice(cut_indices)
     b_begin = a_end
     b_end = end_index
 

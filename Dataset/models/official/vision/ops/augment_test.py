@@ -17,8 +17,6 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
-import random
 from unittest import mock
 from absl.testing import parameterized
 
@@ -27,6 +25,7 @@ import tensorflow as tf, tf_keras
 
 from official.vision.configs import common as configs
 from official.vision.ops import augment
+import secrets
 
 
 def get_dtype_test_cases():
@@ -307,8 +306,8 @@ class AutoaugmentTest(tf.test.TestCase, parameterized.TestCase):
     """Generate a test policy at random."""
     op_list = list(augment.NAME_TO_FUNC.keys())
     size = 6
-    prob = [round(random.uniform(0., 1.), 1) for _ in range(size)]
-    mag = [round(random.uniform(0, 10)) for _ in range(size)]
+    prob = [round(secrets.SystemRandom().uniform(0., 1.), 1) for _ in range(size)]
+    mag = [round(secrets.SystemRandom().uniform(0, 10)) for _ in range(size)]
     policy = []
     for i in range(0, size, 2):
       policy.append([(op_list[i], prob[i], mag[i]),

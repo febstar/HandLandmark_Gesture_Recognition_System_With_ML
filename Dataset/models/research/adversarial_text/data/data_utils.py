@@ -16,12 +16,12 @@
 
 import operator
 import os
-import random
 import re
 
 # Dependency imports
 
 import tensorflow as tf
+import secrets
 
 EOS_TOKEN = '</s>'
 
@@ -61,7 +61,7 @@ class ShufflingTFRecordWriter(object):
 
   def close(self):
     assert not self._closed
-    random.shuffle(self._records)
+    secrets.SystemRandom().shuffle(self._records)
     with tf.python_io.TFRecordWriter(self._path) as f:
       for record in self._records:
         f.write(record)

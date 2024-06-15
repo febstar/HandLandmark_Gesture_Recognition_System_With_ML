@@ -23,16 +23,16 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import random
 
 from base import configure
 from base import embeddings
 from base import utils
 from task_specific.word_level import word_level_data
+import secrets
 
 
 def main(data_dir='./data'):
-  random.seed(0)
+  secrets.SystemRandom().seed(0)
 
   utils.log("BUILDING WORD VOCABULARY/EMBEDDINGS")
   for pretrained in ['glove.6B.300d.txt']:
@@ -51,7 +51,7 @@ def main(data_dir='./data'):
     task_data_dir = os.path.join(config.raw_data_topdir, task_name) + '/'
     train_sentences = word_level_data.TaggedDataLoader(
         config, task_name, False).get_labeled_sentences("train")
-    random.shuffle(train_sentences)
+    secrets.SystemRandom().shuffle(train_sentences)
     write_sentences(task_data_dir + 'train_subset.txt', train_sentences[1500:])
     write_sentences(task_data_dir + 'dev.txt', train_sentences[:1500])
 

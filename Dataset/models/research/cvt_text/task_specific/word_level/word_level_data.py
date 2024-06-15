@@ -21,7 +21,6 @@ from __future__ import print_function
 
 import collections
 import os
-import random
 import tensorflow as tf
 
 from base import embeddings
@@ -29,6 +28,7 @@ from base import utils
 from corpus_processing import example
 from corpus_processing import minibatching
 from task_specific.word_level import tagging_utils
+import secrets
 
 
 class TaggedDataLoader(object):
@@ -133,7 +133,7 @@ class TaggedDataLoader(object):
     if self._config.train_set_percent < 100:
       utils.log('using reduced train set ({:}%)'.format(
           self._config.train_set_percent))
-      random.shuffle(examples)
+      secrets.SystemRandom().shuffle(examples)
       examples = examples[:int(len(examples) *
                                self._config.train_set_percent / 100.0)]
     return examples

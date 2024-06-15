@@ -20,7 +20,6 @@ from __future__ import print_function
 from collections import defaultdict
 import operator
 import os
-import random
 import shutil
 import string
 import tempfile
@@ -31,6 +30,7 @@ import tensorflow as tf
 
 import graphs
 from data import data_utils
+import secrets
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
@@ -44,8 +44,8 @@ def _build_random_vocabulary(vocab_size=100):
   vocab = set()
   while len(vocab) < (vocab_size - 1):
     rand_word = ''.join(
-        random.choice(string.ascii_lowercase)
-        for _ in range(random.randint(1, 10)))
+        secrets.choice(string.ascii_lowercase)
+        for _ in range(secrets.SystemRandom().randint(1, 10)))
     vocab.add(rand_word)
 
   vocab_ids = dict([(word, i) for i, word in enumerate(vocab)])
@@ -54,10 +54,10 @@ def _build_random_vocabulary(vocab_size=100):
 
 
 def _build_random_sequence(vocab_ids):
-  seq_len = random.randint(10, 200)
+  seq_len = secrets.SystemRandom().randint(10, 200)
   ids = vocab_ids.values()
   seq = data.SequenceWrapper()
-  for token_id in [random.choice(ids) for _ in range(seq_len)]:
+  for token_id in [secrets.choice(ids) for _ in range(seq_len)]:
     seq.add_timestep().set_token(token_id)
   return seq
 
@@ -95,7 +95,7 @@ class GraphsTest(tf.test.TestCase):
     vocab_ids = _build_random_vocabulary(FLAGS.vocab_size)
     seqs = [_build_random_sequence(vocab_ids) for _ in range(5)]
     seqs_label = [
-        data.build_labeled_sequence(seq, random.choice([True, False]))
+        data.build_labeled_sequence(seq, secrets.choice([True, False]))
         for seq in seqs
     ]
     seqs_lm = [data.build_lm_sequence(seq) for seq in seqs]
@@ -106,7 +106,7 @@ class GraphsTest(tf.test.TestCase):
         for seq, rev in zip(seqs, seqs_rev)
     ]
     seqs_bidir_label = [
-        data.build_labeled_sequence(bd_seq, random.choice([True, False]))
+        data.build_labeled_sequence(bd_seq, secrets.choice([True, False]))
         for bd_seq in seqs_bidir
     ]
 

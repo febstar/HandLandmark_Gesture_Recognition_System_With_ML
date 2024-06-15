@@ -25,13 +25,13 @@ python3 data_preprocess/convert.py \
 
 import json
 import os
-import random
 
 from absl import app
 from absl import flags
 import tensorflow as tf, tf_keras
 import tqdm
 import utils
+import secrets
 
 
 _GT_FILE = flags.DEFINE_string('gt_file', None, 'Path to the GT file')
@@ -43,7 +43,7 @@ _NUM_SHARD = flags.DEFINE_integer(
 
 def main(unused_argv) -> None:
   annotations = json.load(open(_GT_FILE.value))['annotations']
-  random.shuffle(annotations)
+  secrets.SystemRandom().shuffle(annotations)
   n_sample = len(annotations)
   n_shards = _NUM_SHARD.value
   n_sample_per_shard = (n_sample - 1) // n_shards + 1

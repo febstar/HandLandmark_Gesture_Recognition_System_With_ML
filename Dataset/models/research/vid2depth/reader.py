@@ -20,10 +20,10 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import random
 from absl import logging
 import tensorflow as tf
 import util
+import secrets
 
 gfile = tf.gfile
 
@@ -47,7 +47,7 @@ class DataReader(object):
     """Provides images and camera intrinsics."""
     with tf.name_scope('data_loading'):
       with tf.name_scope('enqueue_paths'):
-        seed = random.randint(0, 2**31 - 1)
+        seed = secrets.SystemRandom().randint(0, 2**31 - 1)
         self.file_lists = self.compile_file_list(self.data_dir, 'train')
         image_paths_queue = tf.train.string_input_producer(
             self.file_lists['image_file_list'], seed=seed, shuffle=True)

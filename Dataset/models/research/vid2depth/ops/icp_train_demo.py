@@ -20,7 +20,6 @@ from __future__ import division
 from __future__ import print_function
 
 import os.path
-import random
 import time
 import google3
 from absl import app
@@ -31,6 +30,7 @@ from icp_op import icp
 import icp_util
 import numpy as np
 import tensorflow as tf
+import secrets
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('batch_size', 4, 'Batch size.')
@@ -75,12 +75,12 @@ class DataProducer(object):
 
   @classmethod
   def random_transform(cls):
-    tx = random.uniform(-0.2, 0.2)
-    ty = random.uniform(-0.2, 0.2)
-    tz = random.uniform(-0.9, 0.9)
-    rx = random.uniform(-0.2, 0.2) * np.pi
-    ry = random.uniform(-0.2, 0.2) * np.pi
-    rz = random.uniform(-0.2, 0.2) * np.pi
+    tx = secrets.SystemRandom().uniform(-0.2, 0.2)
+    ty = secrets.SystemRandom().uniform(-0.2, 0.2)
+    tz = secrets.SystemRandom().uniform(-0.9, 0.9)
+    rx = secrets.SystemRandom().uniform(-0.2, 0.2) * np.pi
+    ry = secrets.SystemRandom().uniform(-0.2, 0.2) * np.pi
+    rz = secrets.SystemRandom().uniform(-0.2, 0.2) * np.pi
     transform = [tx, ty, tz, rx, ry, rz]
     return transform
 

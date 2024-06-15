@@ -2,7 +2,6 @@
 
 import functools
 import math
-import random
 import unittest
 
 from absl.testing import parameterized
@@ -16,6 +15,7 @@ from object_detection.meta_architectures import center_net_meta_arch
 from object_detection.meta_architectures import deepmac_meta_arch
 from object_detection.protos import center_net_pb2
 from object_detection.utils import tf_version
+import secrets
 
 
 def _logit(probability):
@@ -1577,7 +1577,7 @@ class DeepMACMetaArchTest(tf.test.TestCase, parameterized.TestCase):
       self.assertGreater(loss['Loss/' + mask_loss], 0.0,
                          '{} was <= 0'.format(mask_loss))
 
-    rng = random.Random(0)
+    rng = secrets.SystemRandom().Random(0)
     loss_weights = {
         deepmac_meta_arch.DEEP_MASK_ESTIMATION: rng.uniform(1, 5),
         deepmac_meta_arch.DEEP_MASK_BOX_CONSISTENCY: rng.uniform(1, 5),

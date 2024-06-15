@@ -15,7 +15,6 @@
 
 # import io
 import os
-import random
 
 from absl.testing import parameterized
 import numpy as np
@@ -25,6 +24,7 @@ from official.core import exp_factory
 from official.vision import registry_imports  # pylint: disable=unused-import
 from official.vision.dataloaders import tfexample_utils
 from official.vision.serving import video_classification
+import secrets
 
 
 class VideoClassificationTest(tf.test.TestCase, parameterized.TestCase):
@@ -55,7 +55,7 @@ class VideoClassificationTest(tf.test.TestCase, parameterized.TestCase):
       example = tfexample_utils.make_video_test_example(
           image_shape=(64, 64, 3),
           audio_shape=(20, 128),
-          label=random.randint(0, 100)).SerializeToString()
+          label=secrets.SystemRandom().randint(0, 100)).SerializeToString()
       images = tf.nest.map_structure(
           tf.stop_gradient,
           tf.map_fn(

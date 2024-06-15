@@ -88,13 +88,13 @@ from __future__ import print_function
 
 from datetime import datetime
 import os
-import random
 import sys
 import threading
 
 import numpy as np
 from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow.compat.v1 as tf
+import secrets
 
 
 tf.app.flags.DEFINE_string('train_directory', '/tmp/',
@@ -526,8 +526,8 @@ def _find_image_files(data_dir, labels_file):
   # random ordering of the images with respect to label in the
   # saved TFRecord files. Make the randomization repeatable.
   shuffled_index = range(len(filenames))
-  random.seed(12345)
-  random.shuffle(shuffled_index)
+  secrets.SystemRandom().seed(12345)
+  secrets.SystemRandom().shuffle(shuffled_index)
 
   filenames = [filenames[i] for i in shuffled_index]
   synsets = [synsets[i] for i in shuffled_index]

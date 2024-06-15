@@ -16,7 +16,6 @@
 """Script to pre-process SQUAD data into tfrecords."""
 
 import os
-import random
 
 # Import libraries
 from absl import app
@@ -26,6 +25,7 @@ import tensorflow as tf, tf_keras
 
 import sentencepiece as spm
 from official.legacy.xlnet import squad_utils
+import secrets
 
 flags.DEFINE_integer(
     "num_proc", default=1, help="Number of preprocessing processes.")
@@ -71,7 +71,7 @@ def preprocess():
 
     # Pre-shuffle the input to avoid having to make a very large shuffle
     # buffer in the `input_fn`.
-    random.shuffle(train_examples)
+    secrets.SystemRandom().shuffle(train_examples)
     write_to_logging = "Write to " + train_rec_file
     logging.info(write_to_logging)
     train_writer = squad_utils.FeatureWriter(

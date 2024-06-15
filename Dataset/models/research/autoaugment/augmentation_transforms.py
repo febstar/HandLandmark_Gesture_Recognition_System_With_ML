@@ -18,11 +18,11 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
-import random
 import numpy as np
 # pylint:disable=g-multiple-import
 from PIL import ImageOps, ImageEnhance, ImageFilter, Image
+import secrets
+
 # pylint:enable=g-multiple-import
 
 
@@ -209,7 +209,7 @@ class TransformT(object):
   def pil_transformer(self, probability, level):
 
     def return_function(im):
-      if random.random() < probability:
+      if secrets.SystemRandom().random() < probability:
         im = self.xform(im, level)
       return im
 
@@ -253,7 +253,7 @@ smooth = TransformT(
 def _rotate_impl(pil_img, level):
   """Rotates `pil_img` from -30 to 30 degrees depending on `level`."""
   degrees = int_parameter(level, 30)
-  if random.random() > 0.5:
+  if secrets.SystemRandom().random() > 0.5:
     degrees = -degrees
   return pil_img.rotate(degrees)
 
@@ -285,7 +285,7 @@ def _shear_x_impl(pil_img, level):
     A PIL Image that has had ShearX applied to it.
   """
   level = float_parameter(level, 0.3)
-  if random.random() > 0.5:
+  if secrets.SystemRandom().random() > 0.5:
     level = -level
   return pil_img.transform((32, 32), Image.AFFINE, (1, level, 0, 0, 1, 0))
 
@@ -308,7 +308,7 @@ def _shear_y_impl(pil_img, level):
     A PIL Image that has had ShearX applied to it.
   """
   level = float_parameter(level, 0.3)
-  if random.random() > 0.5:
+  if secrets.SystemRandom().random() > 0.5:
     level = -level
   return pil_img.transform((32, 32), Image.AFFINE, (1, 0, 0, level, 1, 0))
 
@@ -331,7 +331,7 @@ def _translate_x_impl(pil_img, level):
     A PIL Image that has had TranslateX applied to it.
   """
   level = int_parameter(level, 10)
-  if random.random() > 0.5:
+  if secrets.SystemRandom().random() > 0.5:
     level = -level
   return pil_img.transform((32, 32), Image.AFFINE, (1, 0, level, 0, 1, 0))
 
@@ -354,7 +354,7 @@ def _translate_y_impl(pil_img, level):
     A PIL Image that has had TranslateY applied to it.
   """
   level = int_parameter(level, 10)
-  if random.random() > 0.5:
+  if secrets.SystemRandom().random() > 0.5:
     level = -level
   return pil_img.transform((32, 32), Image.AFFINE, (1, 0, 0, 0, 1, level))
 

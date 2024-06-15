@@ -18,7 +18,6 @@ from __future__ import division
 from __future__ import print_function
 
 import json
-import random
 import sys
 import os
 
@@ -28,6 +27,7 @@ import tensorflow as tf
 import rebar
 import datasets
 import logger as L
+import secrets
 
 try:
   xrange          # Python 2
@@ -109,7 +109,7 @@ def train(sbn, train_xs, valid_xs, test_xs, training_steps, debug=False):
       lHats = []
       grad_variances = []
       temperatures = []
-      random.shuffle(index)
+      secrets.SystemRandom().shuffle(index)
       i = 0
       while i < n:
         batch_index = index[i:min(i+batch_size, n)]

@@ -53,9 +53,9 @@ ap3 = calculator.peek_ap_at_n()
 
 import heapq
 import numbers
-import random
 
 import numpy
+import secrets
 
 
 class AveragePrecisionCalculator(object):
@@ -245,8 +245,8 @@ class AveragePrecisionCalculator(object):
 
   @staticmethod
   def _shuffle(predictions, actuals):
-    random.seed(0)
-    suffidx = random.sample(range(len(predictions)), len(predictions))
+    secrets.SystemRandom().seed(0)
+    suffidx = secrets.SystemRandom().sample(range(len(predictions)), len(predictions))
     predictions = predictions[suffidx]
     actuals = actuals[suffidx]
     return predictions, actuals

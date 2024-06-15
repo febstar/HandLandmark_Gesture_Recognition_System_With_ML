@@ -14,13 +14,13 @@
 
 """Tests for official.nlp.data.tagging_data_lib."""
 import os
-import random
 
 from absl.testing import parameterized
 import tensorflow as tf, tf_keras
 
 from official.nlp.data import tagging_data_lib
 from official.nlp.tools import tokenization
+import secrets
 
 
 def _create_fake_file(filename, labels, is_test):
@@ -29,7 +29,7 @@ def _create_fake_file(filename, labels, is_test):
     for _ in range(length):
       line = "hiworld"
       if not is_test:
-        line += "\t%s" % (labels[random.randint(0, len(labels) - 1)])
+        line += "\t%s" % (labels[secrets.SystemRandom().randint(0, len(labels) - 1)])
       writer.write(line + "\n")
 
   # Writes two sentences with length of 3 and 12 respectively.

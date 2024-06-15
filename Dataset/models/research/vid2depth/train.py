@@ -33,7 +33,6 @@ from __future__ import print_function
 
 import math
 import os
-import random
 import time
 from absl import app
 from absl import flags
@@ -42,6 +41,7 @@ import model
 import numpy as np
 import tensorflow as tf
 import util
+import secrets
 
 gfile = tf.gfile
 
@@ -80,7 +80,7 @@ def main(_):
   seed = 8964
   tf.set_random_seed(seed)
   np.random.seed(seed)
-  random.seed(seed)
+  secrets.SystemRandom().seed(seed)
 
   if FLAGS.legacy_mode and FLAGS.seq_length < 3:
     raise ValueError('Legacy mode supports sequence length > 2 only.')

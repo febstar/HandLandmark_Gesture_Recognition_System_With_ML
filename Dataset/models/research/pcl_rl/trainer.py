@@ -21,7 +21,6 @@ the parameters used by different algorithms.
 
 import tensorflow as tf
 import numpy as np
-import random
 import os
 import pickle
 
@@ -38,6 +37,7 @@ import replay_buffer
 import expert_paths
 import gym_wrapper
 import env_spec
+import secrets
 
 app = tf.app
 flags = tf.flags
@@ -436,7 +436,7 @@ class Trainer(object):
       rewards.append(total_rewards)
       all_ep_rewards.extend(episode_rewards)
 
-      if (random.random() < 0.1 and summary and episode_rewards and
+      if (secrets.SystemRandom().random() < 0.1 and summary and episode_rewards and
           is_chief and sv and sv._summary_writer):
         sv.summary_computed(sess, summary)
 

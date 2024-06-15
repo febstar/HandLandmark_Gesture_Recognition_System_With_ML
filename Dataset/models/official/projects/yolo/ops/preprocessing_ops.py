@@ -13,13 +13,13 @@
 # limitations under the License.
 
 """Preprocessing ops for yolo."""
-import random
 
 import numpy as np
 import tensorflow as tf, tf_keras
 
 from official.vision.ops import augment
 from official.vision.ops import box_ops as bbox_ops
+import secrets
 
 PAD_VALUE = 114
 GLOBAL_SEED_SET = False
@@ -39,7 +39,7 @@ def set_random_seeds(seed=0):
   """
   if seed is not None:
     global GLOBAL_SEED_SET
-    random.seed(seed)
+    secrets.SystemRandom().seed(seed)
     GLOBAL_SEED_SET = True
   tf.random.set_seed(seed)
   np.random.seed(seed)

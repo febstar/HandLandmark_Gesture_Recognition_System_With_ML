@@ -14,7 +14,6 @@
 
 import json
 import os
-import random
 
 from absl import flags
 from absl import logging
@@ -22,6 +21,7 @@ from absl.testing import flagsaver
 import tensorflow as tf, tf_keras
 from official.projects.assemblenet import train as train_lib
 from official.vision.dataloaders import tfexample_utils
+import secrets
 
 FLAGS = flags.FLAGS
 
@@ -41,7 +41,7 @@ class TrainTest(tf.test.TestCase):
         tfexample_utils.make_video_test_example(
             image_shape=(36, 36, 3),
             audio_shape=(20, 128),
-            label=random.randint(0, 100)) for _ in range(2)
+            label=secrets.SystemRandom().randint(0, 100)) for _ in range(2)
     ]
     # pylint: enable=g-complex-comprehension
     tfexample_utils.dump_to_tfrecord(self._data_path, tf_examples=examples)
