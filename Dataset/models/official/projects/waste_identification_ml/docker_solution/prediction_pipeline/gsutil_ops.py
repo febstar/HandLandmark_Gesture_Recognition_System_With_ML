@@ -21,6 +21,7 @@ The script contains two main functionalities:
 
 import os
 import subprocess
+from security import safe_command
 
 
 def copy(path: str) -> None:
@@ -30,7 +31,7 @@ def copy(path: str) -> None:
     path: path of the video in GCS bucket.
   """
   gsutil_command = f"gsutil cp {path} ."
-  subprocess.run(gsutil_command, shell=True, check=True)
+  safe_command.run(subprocess.run, gsutil_command, shell=True, check=True)
 
 
 def move(file_path: str, destination_bucket_path: str) -> None:
@@ -53,4 +54,4 @@ def move(file_path: str, destination_bucket_path: str) -> None:
   else:
     gsutil_command = f"gsutil mv {file_path} {destination_bucket_path}"
 
-  subprocess.run(gsutil_command, shell=True, check=True)
+  safe_command.run(subprocess.run, gsutil_command, shell=True, check=True)

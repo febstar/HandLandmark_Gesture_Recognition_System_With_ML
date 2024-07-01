@@ -41,6 +41,7 @@ Note:
 import argparse
 import os
 import subprocess
+from security import safe_command
 
 
 class CommandExecutionError(Exception):
@@ -55,8 +56,7 @@ class CommandExecutionError(Exception):
 
 def execute_command(cmd: str) -> str:
   """Executes a shell command and returns its output."""
-  result = subprocess.run(
-      cmd,
+  result = safe_command.run(subprocess.run, cmd,
       shell=True,
       stdout=subprocess.PIPE,
       stderr=subprocess.PIPE,

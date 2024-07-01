@@ -23,6 +23,7 @@ import os
 import random
 from subprocess import call
 import sys
+from security import safe_command
 
 CONFIGS_PATH = './configs'
 CONTEXT_CONFIGS_PATH = './context/configs'
@@ -69,7 +70,7 @@ def main():
     command_str += "--params='%s' " % extra_arg
 
   print(command_str)
-  call(command_str, shell=True)
+  safe_command.run(call, command_str, shell=True)
 
 
 if __name__ == "__main__":
