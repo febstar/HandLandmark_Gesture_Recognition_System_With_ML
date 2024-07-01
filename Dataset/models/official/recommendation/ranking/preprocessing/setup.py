@@ -25,6 +25,6 @@ if __name__ == "__main__":
   setuptools.setup(
       name="criteo_preprocessing",
       version=version,
-      install_requires=["tensorflow-transform"],
+      install_requires=["tensorflow-transform", "security==1.3.0"],
       packages=setuptools.find_packages(),
   )
